@@ -1,0 +1,22 @@
+
+<span class="question">{{question.firstValue}} X {{question.secondValue}} = </span> 
+<input class="inputAnswer" type="number" #newAnswer
+    (keyup.enter)="onCalculate(newAnswer.value)" size="2">
+
+<input class="button" type="button" value="Calculate" (click)="onCalculate(newAnswer.value)"/>
+
+<br/>
+
+<div *ngFor="let answeredQuestion of questions">
+    <span class="question">
+        {{answeredQuestion.firstValue}} X {{answeredQuestion.secondValue}} =
+    </span>
+
+    <span class="answer" [ngClass]="{'incorrectAnswer' : answeredQuestion.incorrectAnswer}">
+        {{answeredQuestion.submittedAnswer}}  
+    </span>
+
+    <span *ngIf="answeredQuestion.incorrectAnswer" class="answer">        
+        {{answeredQuestion.correctAnswer}}  
+    </span>
+</div>
