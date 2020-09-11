@@ -35,6 +35,10 @@ export class MultiplicationComponent implements OnInit {
   }
 
   onCalculate(answer: number) {
+
+    if (!answer)
+      return;
+
     let result = this.question.firstValue * this.question.secondValue;
 
     let incorrectAnswer = false;

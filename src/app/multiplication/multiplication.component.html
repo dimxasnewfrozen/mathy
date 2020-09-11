@@ -1,7 +1,9 @@
 
 <span class="question">{{question.firstValue}} X {{question.secondValue}} = </span> 
 <input class="inputAnswer" type="number" #newAnswer
-    (keyup.enter)="onCalculate(newAnswer.value)" size="2">
+    (keyup.enter)="onCalculate(newAnswer.value)" 
+    (blur)="onCalculate(newAnswer.value); newAnswer.value=''"
+    size="2">
 
 <input class="button" type="button" value="Calculate" (click)="onCalculate(newAnswer.value)"/>
 
