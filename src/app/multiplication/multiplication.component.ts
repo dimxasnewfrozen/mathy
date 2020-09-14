@@ -25,6 +25,9 @@ export class MultiplicationComponent implements OnInit {
   };
 
   questions : Question[] = [];
+  
+  streak : number = 0;
+  displayStreak : boolean = false;
 
   constructor() { 
 
@@ -41,9 +44,20 @@ export class MultiplicationComponent implements OnInit {
 
     let result = this.question.firstValue * this.question.secondValue;
 
+    this.streak++;
+
     let incorrectAnswer = false;
-    if (result != answer)
+    if (result != answer) 
+    {
       incorrectAnswer = true;
+      this.streak = 0;
+    }
+    else {
+      if (this.streak % 3 == 0)
+        this.displayStreak = true;
+      else
+        this.displayStreak = false;
+    }
 
     let currentQuestion : Question = {
       firstValue: this.question.firstValue,

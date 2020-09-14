@@ -3,7 +3,6 @@
       <h1 class="title">Multiplication</h1>
       <div class="columns is-8 is-variable ">
         <div class="column is-two-thirds">
-
             <div class="columns is-multiline is-mobile">
                 <div class="column is-half has-text-right is-size-1"></div>
                 <div class="column is-half has-text-left is-size-1">
@@ -29,10 +28,14 @@
                 <button class="button is-large is-primary" (click)="onCalculate(newAnswer.value)">Calculate</button>
             </div>
 
+            <div *ngIf="displayStreak" class="columns is-mobile is-centered">
+                <span class="is-size-1">{{streak}} CORRECT HOT STREAK!</span>
+            </div>
+
         </div>
 
         <div class="column is-one-third has-text-left">
-            <span class="is-size-2">Results</span>    
+            <span class="is-size-2">Results:</span>
             <div *ngFor="let answeredQuestion of questions">
                 <span class="is-size-3 has-text-success" [ngClass]="{'has-text-danger' : answeredQuestion.incorrectAnswer}">
                     {{answeredQuestion.firstValue}} X {{answeredQuestion.secondValue}} =
