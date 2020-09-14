@@ -1,24 +1,52 @@
+<section class="section">
+    <div class="container">
+      <h1 class="title">Multiplication</h1>
+      <div class="columns is-8 is-variable ">
+        <div class="column is-two-thirds">
 
-<span class="question">{{question.firstValue}} X {{question.secondValue}} = </span> 
-<input class="inputAnswer" type="number" #newAnswer
-    (keyup.enter)="onCalculate(newAnswer.value)" 
-    (blur)="onCalculate(newAnswer.value); newAnswer.value=''"
-    size="2">
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-half has-text-right is-size-1"></div>
+                <div class="column is-half has-text-left is-size-1">
+                    {{question.firstValue}}
+                </div>
+                <div class="column is-half has-text-right is-size-1">
+                  X
+                </div>
+                <div class="column is-half has-text-left is-size-1">
+                  {{question.secondValue}}
+                </div>
+            </div>
 
-<input class="button" type="button" value="Calculate" (click)="onCalculate(newAnswer.value)"/>
+            <div class="columns is-mobile is-centered">
+                <div class="column is-half has-text-centered">
+                    <input class="input is-large" type="text" #newAnswer
+                    (keyup.enter)="onCalculate(newAnswer.value)" 
+                    (blur)="onCalculate(newAnswer.value); newAnswer.value=''">
+                </div>
+            </div>
 
-<br/>
+            <div class="columns is-mobile is-centered">
+                <button class="button is-large is-primary" (click)="onCalculate(newAnswer.value)">Calculate</button>
+            </div>
 
-<div *ngFor="let answeredQuestion of questions">
-    <span class="question">
-        {{answeredQuestion.firstValue}} X {{answeredQuestion.secondValue}} =
-    </span>
+        </div>
 
-    <span class="answer" [ngClass]="{'incorrectAnswer' : answeredQuestion.incorrectAnswer}">
-        {{answeredQuestion.submittedAnswer}}  
-    </span>
+        <div class="column is-one-third has-text-left">
+            <span class="is-size-2">Results</span>    
+            <div *ngFor="let answeredQuestion of questions">
+                <span class="is-size-3 has-text-success" [ngClass]="{'has-text-danger' : answeredQuestion.incorrectAnswer}">
+                    {{answeredQuestion.firstValue}} X {{answeredQuestion.secondValue}} =
+                    <span [ngClass]="{'incorrect' : answeredQuestion.incorrectAnswer}">        
+                        {{answeredQuestion.submittedAnswer}}  
+                    </span>
 
-    <span *ngIf="answeredQuestion.incorrectAnswer" class="answer">        
-        {{answeredQuestion.correctAnswer}}  
-    </span>
-</div>
+                    <span *ngIf="answeredQuestion.incorrectAnswer" class="has-text-success">        
+                        {{answeredQuestion.correctAnswer}}  
+                    </span>
+                </span>
+            </div>
+        </div>
+      </div>
+
+    </div>
+</section>
