@@ -123,8 +123,9 @@ export class MultiplicationComponent implements OnInit {
   }
 
   createNewQuestion(): void {
-    this.question.firstValue = Math.floor(Math.random() * this.currentLevelObject.maxValue + 1);
-    this.question.secondValue = Math.floor(Math.random() * this.currentLevelObject.maxValue + 1);
+    const level = this.currentLevelObject;
+    this.question.firstValue = Math.floor(Math.random() * level.firstValueRange[1] + 1);
+    this.question.secondValue = Math.floor(Math.random() * ((level.secondValueRange[1] + 1) - level.secondValueRange[0]) + level.secondValueRange[0]);
     this.question.submittedAnswer = 0;
     this.question.correctAnswer = null;
     this.question.incorrectAnswer = false;
