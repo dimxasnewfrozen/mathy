@@ -36,19 +36,29 @@
         </div>
 
         <div class="column is-one-third has-text-left">
-            <span class="is-size-2">Results:</span>
-            <div *ngFor="let answeredQuestion of questions">
-                <span class="is-size-3 has-text-success" [ngClass]="{'has-text-danger' : answeredQuestion.incorrectAnswer}">
-                    {{answeredQuestion.firstValue}} X {{answeredQuestion.secondValue}} =
-                    <span [ngClass]="{'incorrect' : answeredQuestion.incorrectAnswer}">        
-                        {{answeredQuestion.submittedAnswer}}  
-                    </span>
-
-                    <span *ngIf="answeredQuestion.incorrectAnswer" class="has-text-success">        
-                        {{answeredQuestion.correctAnswer}}  
-                    </span>
-                </span>
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-full has-text-left">
+                <img src="assets/img/gem.png" class="gem"/> 
+                <span class="is-size-1"> {{displayGems}}</span>
+                </div>
+                <div class="column is-full has-text-left">
+                    <span class="is-size-2">Results:</span>
+                    <div *ngFor="let answeredQuestion of questions">
+                        <span class="is-size-3 has-text-success" [ngClass]="{'has-text-danger' : answeredQuestion.incorrectAnswer}">
+                            {{answeredQuestion.firstValue}} X {{answeredQuestion.secondValue}} =
+                            <span [ngClass]="{'incorrect' : answeredQuestion.incorrectAnswer}">        
+                                {{answeredQuestion.submittedAnswer}}  
+                            </span>
+        
+                            <span *ngIf="answeredQuestion.incorrectAnswer" class="has-text-success">        
+                                {{answeredQuestion.correctAnswer}}  
+                            </span>
+                        </span>
+                    </div>
+                </div>
             </div>
+            
+        
         </div>
       </div>
 

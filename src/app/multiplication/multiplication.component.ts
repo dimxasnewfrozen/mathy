@@ -33,6 +33,9 @@ export class MultiplicationComponent implements OnInit {
   currentLevelMaxXp: number = 0;
   currentLevelMinXp: number = 0;
   progressMax : number = 0;
+  gems: number = 0;
+  displayGems: number = 0;
+  streakCount : number = 5;
 
   constructor() { 
     this.setInitialLevel();
@@ -67,12 +70,12 @@ export class MultiplicationComponent implements OnInit {
       this.totalXp += XP.incorrectAnswer;
     }
     else {
-      if (this.streak % 5 == 0)
+      if (this.streak % this.streakCount == 0)
       {
         this.displayStreak = true;
+        this.gems += 3;
         this.totalXp += XP.streak;
       }
-
       else{
         this.displayStreak = false;
         this.totalXp += XP.correctAnswer;
@@ -115,6 +118,7 @@ export class MultiplicationComponent implements OnInit {
     }
 
     this.levelXp = this.totalXp - this.currentLevelMinXp;
+    this.displayGems = this.gems + ((this.currentLevel - 1) * 5);
 
   }
 
