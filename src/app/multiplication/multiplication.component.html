@@ -18,15 +18,16 @@
 
             <div class="columns is-mobile is-centered">
                 <div class="column is-half has-text-centered">
-                    <input class="input is-large" type="text" #newAnswer
-                    (keyup.enter)="onCalculate(newAnswer.value)" 
-                    (blur)="onCalculate(newAnswer.value); newAnswer.value=''">
+                    <input class="input is-large" type="text" #newAnswer>
                 </div>
             </div>
 
             <div class="columns is-mobile is-centered">
-                <button class="button is-large is-primary" (click)="onCalculate(newAnswer.value)">Calculate</button>
+                <button class="button is-large is-primary" (click)="onCalculate()">Calculate</button>
             </div>
+
+            <span class="is-size-1">Level: {{currentLevel}}</span>
+            <progress class="progress is-primary" value="{{levelXp}}" max="{{progressMax}}"></progress>
 
             <div *ngIf="displayStreak" class="columns is-mobile is-centered">
                 <span class="is-size-1">{{streak}} CORRECT HOT STREAK!</span>

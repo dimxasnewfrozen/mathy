@@ -1,12 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  ViewChild, ElementRef } from '@angular/core';
 
-export interface Question {
-  firstValue: number;
-  secondValue: number;
-  submittedAnswer: number;
-  correctAnswer: number;
-  incorrectAnswer: boolean;
-}
+import { Question } from '../models/question';
+import { XP } from '../config/xp';
+import { Levels } from '../config/levels';
 
 @Component({
   selector: 'app-multiplication',
@@ -15,6 +11,7 @@ export interface Question {
 })
 
 export class MultiplicationComponent implements OnInit {
+  @ViewChild('newAnswer') newAnswer: ElementRef;
 
   question : Question = {
     firstValue: 0,
@@ -28,18 +25,31 @@ export class MultiplicationComponent implements OnInit {
   
   streak : number = 0;
   displayStreak : boolean = false;
+  totalXp : number = 0;
+  levelXp : number = 0;
+  currentLevel: number = 1;
+  currentLevelMaxXp: number = 0;
+  currentLevelMinXp: number = 0;
+  progressMax : number = 0;
 
   constructor() { 
-
+    this.setInitialLevel();
   }
 
   ngOnInit(): void {
     this.createNewQuestion();
   }
 
-  onCalculate(answer: number) {
+  setInitialLevel() {
+    let level = Levels.find(o => o.level === this.currentLevel);
+    this.currentLevel = level.level;
+    this.currentLevelMinXp = level.minXp;
+    this.currentLevelMaxXp = level.maxXp;
+  }
 
-    if (!answer)
+  onCalculate() {
+
+    if (!this.newAnswer.nativeElement.value)
       return;
 
     let result = this.question.firstValue * this.question.secondValue;
@@ -47,29 +57,60 @@ export class MultiplicationComponent implements OnInit {
     this.streak++;
 
     let incorrectAnswer = false;
-    if (result != answer) 
+    if (result != this.newAnswer.nativeElement.value) 
     {
       incorrectAnswer = true;
       this.streak = 0;
+      this.totalXp += XP.incorrectAnswer;
     }
     else {
-      if (this.streak % 3 == 0)
+      if (this.streak % 5 == 0)
+      {
         this.displayStreak = true;
-      else
+        this.totalXp += XP.streak;
+      }
+
+      else{
         this.displayStreak = false;
+        this.totalXp += XP.correctAnswer;
+      }
+
     }
 
     let currentQuestion : Question = {
       firstValue: this.question.firstValue,
       secondValue: this.question.secondValue,
-      submittedAnswer: answer,
+      submittedAnswer: this.newAnswer.nativeElement.value,
       correctAnswer: result,
       incorrectAnswer: incorrectAnswer,
     }
 
+    this.newAnswer.nativeElement.value = null;
+
     this.questions.unshift(currentQuestion);
 
     this.createNewQuestion();
+
+    this.calculateLevel();
+
+  }
+
+  calculateLevel(): void {
+
+    for (let i = Levels.length - 1; i >= 0; i--)
+    {
+      if (this.totalXp <= Levels[i].maxXp && this.totalXp >= Levels[i].minXp)
+      {
+        const nextLevel = Levels[i];
+        this.currentLevel = nextLevel.level
+        this.currentLevelMaxXp = nextLevel.maxXp;
+        this.currentLevelMinXp = nextLevel.minXp;
+        this.progressMax = nextLevel.maxXp - nextLevel.minXp;
+        break;
+      }
+    }
+
+    this.levelXp = this.totalXp - this.currentLevelMinXp;
 
   }
 
@@ -77,7 +118,7 @@ export class MultiplicationComponent implements OnInit {
     this.question.firstValue = Math.floor(Math.random() * 11);
     this.question.secondValue = Math.floor(Math.random() * 11);
     this.question.submittedAnswer = 0;
-    this.question.correctAnswer = 0;
+    this.question.correctAnswer = null;
     this.question.incorrectAnswer = false;
   }
 
