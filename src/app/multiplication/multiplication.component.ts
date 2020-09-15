@@ -1,6 +1,7 @@
 import { Component, OnInit,  ViewChild, ElementRef } from '@angular/core';
 
 import { Question } from '../models/question';
+import { Level } from '../models/level';
 import { XP } from '../config/xp';
 import { Levels } from '../config/levels';
 
@@ -28,6 +29,7 @@ export class MultiplicationComponent implements OnInit {
   totalXp : number = 0;
   levelXp : number = 0;
   currentLevel: number = 1;
+  currentLevelObject: Level = Levels[0];
   currentLevelMaxXp: number = 0;
   currentLevelMinXp: number = 0;
   progressMax : number = 0;
@@ -42,6 +44,7 @@ export class MultiplicationComponent implements OnInit {
 
   setInitialLevel() {
     let level = Levels.find(o => o.level === this.currentLevel);
+    this.currentLevelObject = level;
     this.currentLevel = level.level;
     this.currentLevelMinXp = level.minXp;
     this.currentLevelMaxXp = level.maxXp;
@@ -89,9 +92,9 @@ export class MultiplicationComponent implements OnInit {
 
     this.questions.unshift(currentQuestion);
 
-    this.createNewQuestion();
-
     this.calculateLevel();
+
+    this.createNewQuestion();
 
   }
 
@@ -99,13 +102,14 @@ export class MultiplicationComponent implements OnInit {
 
     for (let i = Levels.length - 1; i >= 0; i--)
     {
-      if (this.totalXp <= Levels[i].maxXp && this.totalXp >= Levels[i].minXp)
+      if (this.totalXp < Levels[i].maxXp && this.totalXp >= Levels[i].minXp)
       {
-        const nextLevel = Levels[i];
-        this.currentLevel = nextLevel.level
-        this.currentLevelMaxXp = nextLevel.maxXp;
-        this.currentLevelMinXp = nextLevel.minXp;
-        this.progressMax = nextLevel.maxXp - nextLevel.minXp;
+        const level = Levels[i];
+        this.currentLevelObject = level;
+        this.currentLevel = level.level
+        this.currentLevelMaxXp = level.maxXp;
+        this.currentLevelMinXp = level.minXp;
+        this.progressMax = level.maxXp - level.minXp;
         break;
       }
     }
@@ -115,8 +119,8 @@ export class MultiplicationComponent implements OnInit {
   }
 
   createNewQuestion(): void {
-    this.question.firstValue = Math.floor(Math.random() * 11);
-    this.question.secondValue = Math.floor(Math.random() * 11);
+    this.question.firstValue = Math.floor(Math.random() * this.currentLevelObject.maxValue + 1);
+    this.question.secondValue = Math.floor(Math.random() * this.currentLevelObject.maxValue + 1);
     this.question.submittedAnswer = 0;
     this.question.correctAnswer = null;
     this.question.incorrectAnswer = false;
