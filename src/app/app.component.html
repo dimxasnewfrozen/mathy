@@ -1,2 +1,28 @@
-<app-multiplication></app-multiplication>
+<!-- START NAV -->
+<nav class="navbar">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../">
+                MULTIFLY
+            </a>
+            <a (click)="toggleNavbar()" role="button" #navBurger class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </div>
+        <div id="navbarBasicExample" class="navbar-menu" #navMenu>
+            <div class="navbar-end">
+                <a class="navbar-item is-active" routerLink="/about">About</a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">Play</a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" routerLink="/multiplication">Multiplication</a>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- END NAV -->   
 <router-outlet></router-outlet>
