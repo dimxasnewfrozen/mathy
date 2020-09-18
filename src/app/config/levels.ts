@@ -24,63 +24,63 @@ export const Levels = [
         level: 4,
         minXp: 18,
         maxXp: 30,
-        firstValueRange: [0, 5],
+        firstValueRange: [2, 5],
         secondValueRange: [3, 4]
     },
     {
         level: 5,
         minXp: 31,
         maxXp: 55,
-        firstValueRange: [0, 10],
+        firstValueRange: [2, 10],
         secondValueRange: [3, 4]
     },
     {
         level: 6,
         minXp: 56,
         maxXp: 90,
-        firstValueRange: [0, 12],
+        firstValueRange: [2, 12],
         secondValueRange: [3, 4]
     },
     {
         level: 7,
         minXp: 91,
         maxXp: 150,
-        firstValueRange: [0, 5],
+        firstValueRange: [2, 5],
         secondValueRange: [5, 8]
     },
     {
         level: 8,
         minXp: 151,
         maxXp: 250,
-        firstValueRange: [0, 10],
+        firstValueRange: [2, 10],
         secondValueRange: [5, 8]
     },
     {
         level: 9,
         minXp: 250,
         maxXp: 350,
-        firstValueRange: [0, 12],
+        firstValueRange: [2, 12],
         secondValueRange: [5, 8]
     },
     {
         level: 10,
         minXp: 351,
         maxXp: 500,
-        firstValueRange: [0, 5],
+        firstValueRange: [2, 5],
         secondValueRange: [9, 12]
     },
     {
         level: 11,
         minXp: 501,
         maxXp: 800,
-        firstValueRange: [0, 10],
+        firstValueRange: [2, 10],
         secondValueRange: [9, 12]
     },
     {
         level: 12,
         minXp: 801,
         maxXp: 1000,
-        firstValueRange: [0, 12],
+        firstValueRange: [2, 12],
         secondValueRange: [9, 12]
     }
 ]
