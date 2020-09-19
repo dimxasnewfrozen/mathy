@@ -4,14 +4,13 @@ import { Question } from '../models/question';
 import { Level } from '../models/level';
 import { XP } from '../config/xp';
 import { Levels } from '../config/levels';
-
 @Component({
-  selector: 'app-multiplication',
-  templateUrl: './multiplication.component.html',
-  styleUrls: ['./multiplication.component.scss']
+  selector: 'app-subtraction',
+  templateUrl: './subtraction.component.html',
+  styleUrls: ['./subtraction.component.scss']
 })
 
-export class MultiplicationComponent implements OnInit {
+export class SubtractionComponent implements OnInit {
   @ViewChild('newAnswer') newAnswer: ElementRef;
 
   question : Question = {
@@ -58,7 +57,7 @@ export class MultiplicationComponent implements OnInit {
     if (!this.newAnswer.nativeElement.value)
       return;
 
-    let result = this.question.firstValue * this.question.secondValue;
+    let result = this.question.firstValue - this.question.secondValue;
 
     this.streak++;
 
@@ -128,17 +127,22 @@ export class MultiplicationComponent implements OnInit {
 
   createNewQuestion(): void {
     const level = this.currentLevelObject;
-    this.question.firstValue = this.determineNewFirstValue(level);
-    this.question.secondValue = this.determineNewSecondValue(level);
+
+    const secondValue = this.determineNewSecondValue(level);
+
+    this.question.firstValue = this.determineNewFirstValue(level, secondValue);
+
+    this.question.secondValue = secondValue;
+
     this.question.submittedAnswer = 0;
     this.question.correctAnswer = null;
     this.question.incorrectAnswer = false;
   }
 
   // Don't repeat the previous first value
-  determineNewFirstValue(level: Level): number {
+  determineNewFirstValue(level: Level, secondValue: number): number {
     var value = Math.floor(Math.random() * level.firstValueRange[1] + 1);
-    return (value == this.question.firstValue) ? this.determineNewFirstValue(level) : value;
+    return (value == this.question.firstValue || value < secondValue) ? this.determineNewFirstValue(level, secondValue) : value;
   }
 
   // Don't repeat the previous second value
@@ -146,5 +150,4 @@ export class MultiplicationComponent implements OnInit {
     var value = Math.floor(Math.random() * ((level.secondValueRange[1] + 1) - level.secondValueRange[0]) + level.secondValueRange[0]);
     return (value == this.question.secondValue) ? this.determineNewSecondValue(level) : value;
   }
-
 }

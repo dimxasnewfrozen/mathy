@@ -6,12 +6,11 @@ import { XP } from '../config/xp';
 import { Levels } from '../config/levels';
 
 @Component({
-  selector: 'app-multiplication',
-  templateUrl: './multiplication.component.html',
-  styleUrls: ['./multiplication.component.scss']
+  selector: 'app-addition',
+  templateUrl: './addition.component.html',
+  styleUrls: ['./addition.component.scss']
 })
-
-export class MultiplicationComponent implements OnInit {
+export class AdditionComponent implements OnInit {
   @ViewChild('newAnswer') newAnswer: ElementRef;
 
   question : Question = {
@@ -58,7 +57,7 @@ export class MultiplicationComponent implements OnInit {
     if (!this.newAnswer.nativeElement.value)
       return;
 
-    let result = this.question.firstValue * this.question.secondValue;
+    let result = this.question.firstValue + this.question.secondValue;
 
     this.streak++;
 
@@ -146,5 +145,4 @@ export class MultiplicationComponent implements OnInit {
     var value = Math.floor(Math.random() * ((level.secondValueRange[1] + 1) - level.secondValueRange[0]) + level.secondValueRange[0]);
     return (value == this.question.secondValue) ? this.determineNewSecondValue(level) : value;
   }
-
 }
